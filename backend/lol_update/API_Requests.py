@@ -1,6 +1,11 @@
 import requests
-#Todas las funciones requieren de una API_Key como esta
-api_key  = "RGAPI-46d300b2-0bc3-4c81-a0a7-a5ffa0ab1118"
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+api_key = os.getenv("api_key")
+
+#Todas las funciones requieren de una API_Key
 
 #Función que devuelve el uuid del usuario aportando username y tag. Se puede modificar para que devuelva cualquiera de los otros campos nombrados
 
@@ -15,7 +20,7 @@ def get_puuid(name, tag, api_key):
 PUUID = get_puuid("koldi", "doggy", api_key)
 print( "get_uuid devuelve: "+ PUUID)
 
-#Función que devuelve una cantidad de matchs ids personalizables a partir del count (star = 0 es el ultimo game) a partir del UUID obtenido medienta el get_puuid().
+#Función que devuelve una cantidad de matchs ids personalizables a partir del count (star= 0 es el ultimo game) a partir del UUID obtenido medienta el get_puuid().
 #No estoy seguro de si hay que modificar algo para que lo devuleva en formato string tal como está ahora.
 
 def matches_ids(id, api_key, start, count):
@@ -32,7 +37,8 @@ print( "Estos son los match id de las últimas 5 partidas de koldi : " + ", ".jo
 
 def match_info(id, api_key):
     match_url = f"https://europe.api.riotgames.com/lol/match/v5/matches/{id}?api_key={api_key}"
-    match_info = requests.get(match_url).json
+    res = requests.get(match_url)
+    match_info = res.json()
     return match_info
 
 #Ejemplo
