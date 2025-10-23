@@ -4,9 +4,13 @@
   --color-primary: oklch(0.684 0.13 106.31);
   --color-secondary: oklch(0.3976 0.1777 272.66);
   --color-accent: oklch(0.9114 0.1929 105.81);
-  --color-bg : oklch(0.3417 0.0014 17.23);
+  --color-bgColor : oklch(0.3417 0.0014 17.23);
   --color-text-primary: oklch(0.8576 0.0 89.88);
   --color-text-secondary: oklch(0.5965 0.0 89.88);
+
+  --page-padding: clamp(16px, 4vw, 32px);
+  --sp-container: 1100px;
+  --header-container: 960px;
 }
 
 :root {
@@ -16,8 +20,10 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: var(--color-bg);
+  background-color: var(--color-bgColor);
   color: var(--color-text-primary);
+
+
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -25,13 +31,29 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+@media (min-width: 768px) {
+  :root {
+    --sp-container: 1200px;
+    --header-container: 1040px;
+  }
 }
-a:hover {
-  color: #535bf2;
+
+@media (min-width: 1280px) {
+  :root {
+    --sp-container: 1280px;
+    --header-container: 1120px;
+  }
+}
+
+@media (min-width: 1536px) {
+  :root {
+    --sp-container: 1440px;   /* para layouts amplios */
+    --header-container: 1240px;
+  }
+}
+
+header {
+  max-width: calc(var(--header-container, var(--sp-container)) + var(--page-padding, 32px) * 2);
 }
 
 body {
@@ -45,36 +67,4 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }
