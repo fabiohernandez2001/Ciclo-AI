@@ -69,6 +69,8 @@ def timeline(matchid, api_key):
     return res.json()
 
 #Ejemplo
+with  open("test.json", "w") as a:
+    a.write(str(timeline(Matches[0], api_key)))
 # print("Esto es todo lo que devuelve la api relacionado al timeline:\n ", timeline(Matches[0], api_key))
 
 #Devuelve los datos de Flex y soloQ de la ultima season
@@ -82,3 +84,15 @@ def get_all_ranks(Puuid, api_key):
 #Ejemplo
 res = get_all_ranks(PUUID, api_key)
 print(res)
+
+#Completar que por cada game saque toda la informacion relacionada a
+#cada participante para posteriormente guardarlo en la db.
+games= matches_ids(PUUID, api_key,0, 1)
+game_data = []
+
+for game in games:
+    consulta = match_info(game, api_key)
+    gameid = consulta["metadata"]["matchId"]
+    participants = consulta["info"]["participants"]
+    for participant in participants:
+        print(participant["riotIdGameName"])
