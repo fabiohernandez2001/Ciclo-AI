@@ -5,22 +5,37 @@ import os
 load_dotenv()
 api_key = os.getenv("api_key")
 
-#Todas las funciones requieren de una API_Key
+#Todas las funciones requieren de una API_Key como esta
 
-#Función que devuelve el uuid del usuario aportando username y tag. Se puede modificar para que devuelva cualquiera de los otros campos nombrados
+#Función que devuelve el uuid, icono y nivel del usuario aportando username y tag. Se puede modificar para que devuelva cualquiera de los otros campos nombrados
 
 def get_puuid(name, tag, api_key):
     api_url  = f'https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{name}/{tag}?api_key={api_key}'
     res = requests.get(api_url)
     player_info = res.json()
-    player_uuid = player_info['puuid']
+    player_uuid = [player_info['puuid']]
     return(player_uuid)
 
+print(get_puuid("koldi","doggy",api_key))
 #Ejemplo
-PUUID = get_puuid("koldi", "doggy", api_key)
-print( "get_uuid devuelve: "+ PUUID)
 
-#Función que devuelve una cantidad de matchs ids personalizables a partir del count (star= 0 es el ultimo game) a partir del UUID obtenido medienta el get_puuid().
+PUUID = get_puuid("koldi", "doggy", api_key)
+print( "get_uuid devuelve:", PUUID)
+
+#Función que devuelve el icono y nivel del summoner
+
+def get_icon_lvl (puuid, api_key):
+    icon_url = f"https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{puuid}?api_key={api_key}"
+    res =  requests.get(icon_url).json()
+    icon_id =res["profileIconId"]
+    icon = f"https://static.bigbrain.gg/assets/lol/riot_static/15.20.1/img/profileicon/{icon_id}"
+    lvl = res["summonerLevel"]
+    return icon, lvl
+
+#Ejemplo
+print( "Get_icon_lvl devuelve: ", get_icon_lvl(PUUID, api_key))
+
+#Función que devuelve una cantidad de matchs ids personalizables a partir del count a partir del UUID obtenido medienta el get_puuid().
 #No estoy seguro de si hay que modificar algo para que lo devuleva en formato string tal como está ahora.
 
 def matches_ids(id, api_key, start, count):
@@ -47,3 +62,23 @@ participants = []
 for player in Game["info"]["participants"]:
     participants.append(player['riotIdGameName'])
 print("Estos son los nombres de usuario de cada participante de la partida: "+ ", ".join(participants))
+
+def timeline(matchid, api_key):
+    url = f"https://europe.api.riotgames.com/lol/match/v5/matches/{matchid}/timeline?api_key={api_key}"
+    res = requests.get(url)
+    return res.json()
+
+#Ejemplo
+# print("Esto es todo lo que devuelve la api relacionado al timeline:\n ", timeline(Matches[0], api_key))
+
+#Devuelve los datos de Flex y soloQ de la ultima season
+def get_all_ranks(Puuid, api_key):
+    url = f"https://euw1.api.riotgames.com/lol/league/v4/entries/by-puuid/{Puuid}?api_key={api_key}"
+    res = requests.get(url).json()
+    Ranked_Flex = [res[0]["queueType"],res[0]["tier"], res[0]["rank"], res[0]["leaguePoints"], res[0]["wins"], res[0]["losses"] ]
+    SoloQ = [res[1]["queueType"],res[1]["tier"], res[1]["rank"], res[1]["leaguePoints"], res[1]["wins"], res[1]["losses"] ]
+    return Ranked_Flex, SoloQ
+
+#Ejemplo
+res = get_all_ranks(PUUID, api_key)
+print(res)
