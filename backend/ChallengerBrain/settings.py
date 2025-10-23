@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'lol_navo.apps.LolNavoConfig'
 ]
 
 MIDDLEWARE = [
