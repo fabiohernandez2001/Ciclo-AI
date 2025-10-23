@@ -1,3 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: oklch(0.684 0.13 106.31);
+  --color-secondary: oklch(0.3976 0.1777 272.66);
+  --color-accent: oklch(0.9114 0.1929 105.81);
+  --color-bg : oklch(0.3417 0.0014 17.23);
+  --color-text-primary: oklch(0.8576 0.0 89.88);
+  --color-text-secondary: oklch(0.5965 0.0 89.88);
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -5,7 +16,8 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
