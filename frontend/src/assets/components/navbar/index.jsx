@@ -64,7 +64,7 @@ export default function Navbar() {
     };
     return (
         <header className=" max-w-(--sp-container) w-full ">
-            <div className="hidden sm:flex sticky place-content-between top-0 bg-[#202020] py-4 px-8 rounded-full mx-auto mb-8 shadow-lg shadow-black/30">
+            <div className="hidden sm:flex sticky place-content-between top-0 bg-[#202020] py-4 px-8 rounded-full mx-auto mt-4 mb-8 shadow-lg shadow-black/30">
                 {/* Desktop Navbar */}
                 <div className="flex place-content-start gap-8 items-center">
                     <Logo />
