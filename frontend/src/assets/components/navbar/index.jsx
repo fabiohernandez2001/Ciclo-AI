@@ -2,7 +2,7 @@ import { NavLink } from "react-router";
 import Button from "../UI/Button";
 import { IoMenu } from "react-icons/io5";
 import { IoMdClose } from "react-icons/io";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Logo from "./Logo";
 
 const navItems = [
@@ -46,15 +46,22 @@ function NavLinks({ orientation = "horizontal", onNavigate }) {
 export default function Navbar() {
 
     const [isOpen, setIsOpen] = useState(false);
+    const triggerRef = useRef(null)
+    const closeBtnRef = useRef(null)
 
     useEffect(() => {
-        if (!isOpen) return;
-        
-    }, [isOpen]);
+        if (isOpen) {
+            document.body.classList.add("overflow-hidden");
+            closeBtnRef.current?.focus();
+        } else {
+            document.body.classList.remove("overflow-hidden");
+        }
+        }, [isOpen]);
 
-    const toggleMenu = () => setIsOpen((prev) => !prev);
-    const closeMenu = () => setIsOpen(false);
-
+    const closeMenu = () => {
+        triggerRef.current?.focus();
+        setIsOpen(false);
+    };
     return (
         <header className=" max-w-(--sp-container) w-full ">
             <div className="hidden sm:flex sticky place-content-between top-0 bg-[#202020] py-4 px-8 rounded-full mx-auto mb-8 shadow-lg shadow-black/30">
@@ -79,8 +86,9 @@ export default function Navbar() {
                         aria-label={isOpen ? "Close menu" : "Open menu"}
                         aria-expanded={isOpen}
                         aria-controls={MOBILE_MENU_ID}
-                        onClick={toggleMenu}
+                        onClick={() => setIsOpen(true)}
                         className="flex items-center"
+                        ref={triggerRef}
                     >
                         <IoMenu size={28} />
                     </button>
@@ -112,6 +120,7 @@ export default function Navbar() {
                             aria-label="Close menu"
                             onClick={closeMenu}
                             className="flex items-center"
+                            ref={closeBtnRef} 
                         >
                             <IoMdClose size={28} />
                         </button>
