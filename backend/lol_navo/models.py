@@ -96,7 +96,8 @@ class ChampionStat(models.Model):
      champion_id = models.ForeignKey(Champion, on_delete=models.CASCADE)
      champion_point = models.PositiveBigIntegerField()
      champion_winrate = models.FloatField(default=0)   
-
+     champion_kda = models.FloatField()
+     champion_games = models.PositiveIntegerField()
 
 
     
