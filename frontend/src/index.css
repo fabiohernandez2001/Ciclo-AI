@@ -5,6 +5,7 @@
   --color-secondary: oklch(0.3976 0.1777 272.66);
   --color-accent: oklch(0.9114 0.1929 105.81);
   --color-bgColor : oklch(0.3417 0.0014 17.23);
+  --color-bgColor2: oklch(0.26 0.002 264.7);
   --color-text-primary: oklch(0.8576 0.0 89.88);
   --color-text-secondary: oklch(0.5965 0.0 89.88);
 
@@ -62,9 +63,4 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
 }

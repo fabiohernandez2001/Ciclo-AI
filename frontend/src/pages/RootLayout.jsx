@@ -5,7 +5,7 @@ export default function RootLayout() {
   return (
     <>
         <Navbar />
-        <main>
+        <main className="max-w-(--sp-container) w-full px-8 sm:px-0">
             <Outlet />
         </main>
     </>

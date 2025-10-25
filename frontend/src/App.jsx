@@ -3,11 +3,11 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router'
-import RootLayout from './assets/pages/RootLayout'
-import Homepage from './assets/pages/home'
-import Champions from './assets/pages/champions'
-import Tierlists from './assets/pages/tierlists'
-import Error from './assets/pages/error'
+import RootLayout from './pages/RootLayout'
+import Homepage from './pages/home'
+import Champions from './pages/champions'
+import Tierlists from './pages/tierlists'
+import Error from './pages/error'
 
   const router = createBrowserRouter([
     {
