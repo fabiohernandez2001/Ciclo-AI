@@ -16,11 +16,11 @@ def get_puuid(name, tag, api_key):
     player_uuid = [player_info['puuid']]
     return(player_uuid)
 
-print(get_puuid("koldi","doggy",api_key))
+# print(get_puuid("koldi","doggy",api_key))
 #Ejemplo
 
 PUUID = get_puuid("koldi", "doggy", api_key)
-print( "get_uuid devuelve:", PUUID)
+# print( "get_uuid devuelve:", PUUID)
 
 #Función que devuelve el icono y nivel del summoner
 
@@ -33,7 +33,7 @@ def get_icon_lvl (puuid, api_key):
     return icon, lvl
 
 #Ejemplo
-print( "Get_icon_lvl devuelve: ", get_icon_lvl(PUUID, api_key))
+# print( "Get_icon_lvl devuelve: ", get_icon_lvl(PUUID, api_key))
 
 #Función que devuelve una cantidad de matchs ids personalizables a partir del count a partir del UUID obtenido medienta el get_puuid().
 #No estoy seguro de si hay que modificar algo para que lo devuleva en formato string tal como está ahora.
@@ -45,7 +45,7 @@ def matches_ids(id, api_key, start, count):
 
 #Ejemplo
 Matches = matches_ids(PUUID, api_key, 0, 5)
-print( "Estos son los match id de las últimas 5 partidas de koldi : " + ", ".join(Matches))
+# print( "Estos son los match id de las últimas 5 partidas de koldi : " + ", ".join(Matches))
 
 #Función que devuelve toda la información respecto a una partida a partir de un Match ID.
 # Para extraer datos específicos consultar https://developer.riotgames.com/apis#match-v5/GET_getMatch
@@ -82,17 +82,35 @@ def get_all_ranks(Puuid, api_key):
     return Ranked_Flex, SoloQ
 
 #Ejemplo
-res = get_all_ranks(PUUID, api_key)
-print(res)
+# res = get_all_ranks(PUUID, api_key)
+# print(res)
 
 #Completar que por cada game saque toda la informacion relacionada a
 #cada participante para posteriormente guardarlo en la db.
 games= matches_ids(PUUID, api_key,0, 1)
-game_data = []
 
 for game in games:
     consulta = match_info(game, api_key)
     gameid = consulta["metadata"]["matchId"]
     participants = consulta["info"]["participants"]
     for participant in participants:
-        print(participant["riotIdGameName"])
+        print(gameid,
+              consulta["info"]["gameMode"],
+              participant["puuid"],
+              participant["win"],
+              participant["kills"],
+              participant["deaths"],
+              participant["assists"],
+              participant["championId"],
+              [participant["item0"], participant["item1"], participant["item2"], participant["item3"], participant["item4"], participant["item5"], participant["item6"]],
+              "Faltan runas",
+              "falta el skill order",
+              participant["totalMinionsKilled"],
+              participant["wardsPlaced"],
+              participant["visionScore"],
+              participant["totalDamageDealt"],
+              participant["totalDamageTaken"],
+              participant["totalHeal"],
+              participant["damageSelfMitigated"],
+              participant["goldEarned"],
+              participant["lane"], )
