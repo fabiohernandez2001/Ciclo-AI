@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Select from "./Select";
+import useDebounceValue from "../../hooks/useDebounceValue";
 
 
 
@@ -7,27 +8,24 @@ import Select from "./Select";
 const REGIONS = ["EUW", "NA", "KR", "EUNE", "LAN", "LAS", "OCE", "RU", "TR", "JP"]
 
 
-function useDebounceValue(value, delay = 300) {
-    const [debounce, setDebounce] = useState(value)
-    useEffect(() => {
-        const id = setTimeout(() => setDebounce(value), delay)
-        return () => clearTimeout(id)
-    }, [value, delay])
-    return debounce
-}
+
 
 export default function Searchbar() {
 
     const [query, setQuery] = useState("");
     const [suggestions, setSuggestions] = useState([]);
+
+    const debouncedQuery = useDebounceValue(query, 300);
     
     const handleInputChange = async (e) => {
-        const inputText = e.target.value
-        setQuery(inputText)
-        const plainText = inputText.trim().toLowerCase()
-        const filteredSuggestions = plainText ? ALL.filter((item) => item.toLowerCase().startsWith(plainText)) : [];
-        setSuggestions(filteredSuggestions)
+        setQuery(e.target.value)
     }
+
+    useEffect(() => {
+        const plainText = debouncedQuery.trim().toLowerCase()
+        const filteredSuggestions = plainText ? ALL.filter((item) => item.toLowerCase().startsWith(plainText)) : []
+        setSuggestions(filteredSuggestions)
+    }, [debouncedQuery]);
 
     return (
         <>
