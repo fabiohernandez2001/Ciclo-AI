@@ -70,7 +70,7 @@ export default function Searchbar() {
                         placeholder="Search Champions or players" 
                         value={query}
                         onChange={handleInputChange}
-                        onKeyDown={handleKeyDown}
+                        //onKeyDown={handleKeyDown}
                         role="combobox"
                         aria-autocomplete="list"
                         aria-expanded={open}
