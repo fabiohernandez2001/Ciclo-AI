@@ -1,11 +1,47 @@
 from django.contrib import admin
 
-from .models import Summoner, Match, MatchSummoners, Champion, ChampionStat, Item, Rune
+from . import models
 
-admin.site.register(Summoner)
-admin.site.register(Match)
-admin.site.register(MatchSummoners)
-admin.site.register(Champion)
-admin.site.register(ChampionStat)
-admin.site.register(Item)
-admin.site.register(Rune)
+
+@admin.register(models.Champion)
+class ChampionAdmin(admin.ModelAdmin):
+    list_display = ("id", "champion_name", "champion_role", "champion_winrate")
+    search_fields = ("id", "champion_name", "champion_role")
+
+
+@admin.register(models.Summoner)
+class SummonerAdmin(admin.ModelAdmin):
+    list_display = ("puuid", "username", "server", "ranked_solo_rank")
+    search_fields = ("puuid", "username")
+    list_filter = ("server", "ranked_solo_rank", "ranked_flex_rank")
+
+
+@admin.register(models.Match)
+class MatchAdmin(admin.ModelAdmin):
+    list_display = ("id", "duration", "winner_team", "gold_diff")
+    search_fields = ("id",)
+
+
+@admin.register(models.MatchSummoners)
+class MatchSummonersAdmin(admin.ModelAdmin):
+    list_display = ("match", "summoner", "champion", "winner", "kills", "deaths", "assists")
+    list_filter = ("winner", "game_type")
+    search_fields = ("match__id", "summoner__username", "champion__champion_name")
+
+
+@admin.register(models.ChampionStat)
+class ChampionStatAdmin(admin.ModelAdmin):
+    list_display = ("summoner", "champion", "champion_point", "champion_games")
+    search_fields = ("summoner__username", "champion__champion_name")
+
+
+@admin.register(models.Rune)
+class RuneAdmin(admin.ModelAdmin):
+    list_display = ("id", "rune_name", "rune_value")
+    search_fields = ("id", "rune_name")
+
+
+@admin.register(models.Item)
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ("id", "item_name", "item_value")
+    search_fields = ("id", "item_name")

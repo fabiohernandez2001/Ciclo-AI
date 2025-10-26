@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from .models import Champion
+from .serializers import ChampionSerializer
+
+
+class ChampionViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Champion.objects.all().order_by("champion_name")
+    serializer_class = ChampionSerializer
+    pagination_class = None
