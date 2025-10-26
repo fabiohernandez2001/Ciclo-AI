@@ -32,7 +32,7 @@ class Match(models.Model):
         (100, "Blue"),
         (200, "Red"),
     )
-
+    id = models.CharField(primary_key=True, max_length=32)
     duration = models.DurationField()
     winner_team = models.PositiveSmallIntegerField(choices=WINNER_CHOICES)
     time_lane = models.CharField(max_length=100)
@@ -91,20 +91,56 @@ class MatchSummoners(models.Model):
     match = models.ForeignKey(
         Match,
         on_delete=models.CASCADE,
-        related_name="participants",
+        related_name="match_entries",
     )
     summoner = models.ForeignKey(
         Summoner,
         on_delete=models.CASCADE,
-        related_name="participations",
+        related_name="participants",
     )
     champion = models.ForeignKey(
         Champion,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name="match_entries",
+        related_name="champion",
     )
+    item0 = models.ForeignKey(
+        Item,
+        on_delete=models.CASCADE,
+        related_name="item0",
+    )
+    item1 = models.ForeignKey(
+        Item,
+        on_delete=models.CASCADE,
+        related_name="item0",
+    )
+    item2 = models.ForeignKey(
+        Item,
+        on_delete=models.CASCADE,
+        related_name="item0",
+    )
+    item3 = models.ForeignKey(
+        Item,
+        on_delete=models.CASCADE,
+        related_name="item0",
+    )
+    item4 = models.ForeignKey(
+        Item,
+        on_delete=models.CASCADE,
+        related_name="item0",
+    )
+    item5 = models.ForeignKey(
+        Item,
+        on_delete=models.CASCADE,
+        related_name="item0",
+    )
+    item6 = models.ForeignKey(
+        Item,
+        on_delete=models.CASCADE,
+        related_name="item0",
+    )
+
     skill_order = models.CharField(max_length=255, blank=True, default="")
     cs = models.PositiveIntegerField(default=0)
     wards_used = models.PositiveSmallIntegerField(default=0)
