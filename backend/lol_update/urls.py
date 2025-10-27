@@ -1,5 +1,6 @@
 from rest_framework.routers import DefaultRouter
 from django.urls import path
+'''
 from .views import ChampionViewSet
 
 
@@ -9,3 +10,4 @@ router = DefaultRouter()
 router.register(r'champions', ChampionViewSet, basename="champion")
 
 urlpatterns = router.urls
+'''

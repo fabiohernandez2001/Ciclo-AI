@@ -47,24 +47,24 @@ class Match(models.Model):
     def __str__(self) -> str:
         return f"Match {self.pk}"
 
-
 class Champion(models.Model):
     id = models.CharField(primary_key=True, max_length=20)
     champion_name = models.CharField(max_length=16)
     champion_role = models.CharField(max_length=20)
     champion_description = models.CharField(max_length=255)
-    champion_winrate = models.FloatField()
-    champion_banrate = models.FloatField()
-    champion_pickrate = models.FloatField()
+    champion_winrate = models.FloatField(default=0)
+    champion_banrate = models.FloatField(default=0)
+    champion_pickrate = models.FloatField(default=0)
+    icon = models.URLField(default="")
     summoners = models.ManyToManyField(
         Summoner,
         through="ChampionStat",
         through_fields=("champion", "summoner"),
         related_name="champions",
     )
-
     def __str__(self) -> str:
         return self.champion_name
+
 
 
 class Rune(models.Model):
@@ -78,7 +78,7 @@ class Rune(models.Model):
 
 
 class Item(models.Model):
-    id = models.PositiveSmallIntegerField(primary_key=True)
+    id = models.PositiveSmallIntegerField(primary_key=True, default=0)
     item_name = models.CharField(max_length=20)
     item_value = models.PositiveSmallIntegerField()
     item_description = models.CharField(max_length=200)
@@ -107,38 +107,52 @@ class MatchSummoners(models.Model):
     )
     item0 = models.ForeignKey(
         Item,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
         related_name="item0",
     )
     item1 = models.ForeignKey(
         Item,
-        on_delete=models.CASCADE,
-        related_name="item0",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="item1",
     )
     item2 = models.ForeignKey(
         Item,
-        on_delete=models.CASCADE,
-        related_name="item0",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="item2",
     )
     item3 = models.ForeignKey(
         Item,
-        on_delete=models.CASCADE,
-        related_name="item0",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="item3",
     )
     item4 = models.ForeignKey(
         Item,
-        on_delete=models.CASCADE,
-        related_name="item0",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="item4",
     )
     item5 = models.ForeignKey(
         Item,
-        on_delete=models.CASCADE,
-        related_name="item0",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="item5",
     )
     item6 = models.ForeignKey(
         Item,
-        on_delete=models.CASCADE,
-        related_name="item0",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="item6",
     )
 
     skill_order = models.CharField(max_length=255, blank=True, default="")
