@@ -106,9 +106,48 @@ class Rune(models.Model):
 
 class Item(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True, default=0)
-    item_name = models.CharField(max_length=20)
-    item_value = models.PositiveSmallIntegerField()
-    item_description = models.CharField(max_length=200)
+    name = models.CharField(max_length=20)
+    description = models.CharField(max_length=200)
+    plaintext = models.CharField(max_length=255, blank=True)
+    value = models.PositiveSmallIntegerField()
+    description = models.TextField(blank=True)  # HTML de Riot
+    colloq = models.CharField(max_length=255, blank=True)  # términos de búsqueda
+    # Propiedades varias del ítem
+    stacks = models.PositiveIntegerField(null=True, blank=True)
+    depth = models.PositiveIntegerField(null=True, blank=True)
+    consumed = models.BooleanField(default=False)
+    consume_on_full = models.BooleanField(default=False)
+    in_store = models.BooleanField(default=True)
+    hide_from_all = models.BooleanField(default=False)
+    # Requisitos especiales
+    required_champion = models.CharField(max_length=32, blank=True)
+    required_ally = models.CharField(max_length=32, blank=True)
+    special_recipe = models.PositiveIntegerField(null=True, blank=True)
+    required_buff_currency_name = models.CharField(max_length=64, blank=True)
+    required_buff_currency_cost = models.PositiveIntegerField(null=True, blank=True)
+    # gold: { "base": int, "purchasable": bool, "total": int, "sell": int }
+    base_gold = models.IntegerField(default = 0)
+    purchasable = models.BooleanField(default = False)
+    total_gold = models.IntegerField(default = 0)
+    sell_gold = models.IntegerField(default = 0)
+    # image: { "full": str, "sprite": str, "group": str, "x": int, "y": int, "w": int, "h": int }
+    image = models.URLField(default = "")
+        # stats: diccionario de stats (p.ej. AbilityHaste, MagicResist, etc.)
+    stats = models.JSONField(default=dict, blank=True)
+    # effect: efectos/variables usadas en la description (p.ej. "Effect1Amount": "15")
+    effect = models.JSONField(default=dict, blank=True)
+    # Listas y banderas por mapa / tags
+    # into / from: listas de IDs de ítems (construcciones)
+    builds_into = ArrayField(models.PositiveIntegerField(), default=list, blank=True)  # "into"
+    builds_from = ArrayField(models.PositiveIntegerField(), default=list, blank=True)  # "from"
+    # tags: lista de etiquetas (Armor, AttackSpeed, Mana, etc.)
+    tags = ArrayField(models.CharField(max_length=32), default=list, blank=True)
+    # maps: {"11": true/false, "12": true/false, ...}
+    maps = models.JSONField(default=dict, blank=True)
+    # Metadatos opcionales
+
+
+
 
     def __str__(self) -> str:
         return self.item_name

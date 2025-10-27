@@ -43,5 +43,5 @@ class RuneAdmin(admin.ModelAdmin):
 
 @admin.register(models.Item)
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ("id", "item_name", "item_value")
-    search_fields = ("id", "item_name")
+    list_display = ("id", "name", "value")
+    search_fields = ("id", "name")
