@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.postgres.fields import ArrayField
 
 class Summoner(models.Model):
     puuid = models.CharField(primary_key=True, max_length=72)
@@ -49,12 +49,39 @@ class Match(models.Model):
 
 class Champion(models.Model):
     id = models.CharField(primary_key=True, max_length=20)
-    champion_name = models.CharField(max_length=16)
-    champion_role = models.CharField(max_length=20)
-    champion_description = models.CharField(max_length=255)
-    champion_winrate = models.FloatField(default=0)
-    champion_banrate = models.FloatField(default=0)
-    champion_pickrate = models.FloatField(default=0)
+    name = models.CharField(max_length=16, default = "")
+    title = models.CharField(max_length=20, default = "")
+    description = models.CharField(max_length=2550, default = "")
+    attack = models.PositiveSmallIntegerField(default=0)
+    defense = models.PositiveSmallIntegerField(default=0)
+    magic = models.PositiveSmallIntegerField(default=0)
+    difficulty = models.PositiveSmallIntegerField(default=0)
+    tags = models.JSONField()
+    partype = models.CharField(default = "")
+    hp = models.FloatField(default=0)
+    hpperlevel = models.FloatField(default=0)
+    mp = models.FloatField(default=0)
+    mpperlevel = models.FloatField(default=0)
+    movespeed = models.FloatField(default=0)
+    armor = models.FloatField(default=0)
+    armorperlevel = models.FloatField(default=0)
+    spellblock = models.FloatField(default=0)
+    spellblockperlevel = models.FloatField(default=0)
+    attackrange = models.PositiveSmallIntegerField(default=0)
+    hpregen = models.FloatField(default=0)
+    hpregenperlevel = models.FloatField(default=0)
+    mpregen = models.FloatField(default=0)
+    mpregenperlevel = models.FloatField(default=0)
+    crit = models.FloatField(default=0)
+    critperlevel = models.FloatField(default=0)
+    attackdamage = models.FloatField(default=0)
+    attackdamageperlevel = models.FloatField(default=0)
+    attackspeedperlevel = models.FloatField(default=0)
+    attackspeed = models.FloatField(default=0)
+
+    wins = models.FloatField(default=0)
+    bans = models.FloatField(default=0)
+    picks = models.FloatField(default=0)
     icon = models.URLField(default="")
     summoners = models.ManyToManyField(
         Summoner,
@@ -63,7 +90,7 @@ class Champion(models.Model):
         related_name="champions",
     )
     def __str__(self) -> str:
-        return self.champion_name
+        return self.name
 
 
 
@@ -201,17 +228,17 @@ class ChampionStat(models.Model):
     summoner = models.ForeignKey(
         Summoner,
         on_delete=models.CASCADE,
-        related_name="champion_stats",
+        related_name="stats",
     )
     champion = models.ForeignKey(
         Champion,
         on_delete=models.CASCADE,
         related_name="summoner_stats",
     )
-    champion_point = models.PositiveBigIntegerField(default=0)
-    champion_winrate = models.FloatField(default=0.0)
-    champion_kda = models.FloatField(default=0.0)
-    champion_games = models.PositiveIntegerField(default=0)
+    point = models.PositiveBigIntegerField(default=0)
+    winrate = models.FloatField(default=0.0)
+    kda = models.FloatField(default=0.0)
+    games = models.PositiveIntegerField(default=0)
 
     class Meta:
         constraints = [
@@ -236,4 +263,4 @@ class ChampionStat(models.Model):
         ]
 
     def __str__(self) -> str:
-        return f"{self.summoner_id} | {self.champion_id}"
+        return f"{self.summoner_id} | {self.id}"

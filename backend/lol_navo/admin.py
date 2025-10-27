@@ -5,8 +5,8 @@ from . import models
 
 @admin.register(models.Champion)
 class ChampionAdmin(admin.ModelAdmin):
-    list_display = ("id", "champion_name", "champion_role", "champion_winrate")
-    search_fields = ("id", "champion_name", "champion_role")
+    list_display = ("id", "name")
+    search_fields = ("id", "name", "tags")
 
 
 @admin.register(models.Summoner)
@@ -26,13 +26,13 @@ class MatchAdmin(admin.ModelAdmin):
 class MatchSummonersAdmin(admin.ModelAdmin):
     list_display = ("match", "summoner", "champion", "winner", "kills", "deaths", "assists")
     list_filter = ("winner", "game_type")
-    search_fields = ("match__id", "summoner__username", "champion__champion_name")
+    search_fields = ("match__id", "summoner__username", "name")
 
 
 @admin.register(models.ChampionStat)
 class ChampionStatAdmin(admin.ModelAdmin):
-    list_display = ("summoner", "champion", "champion_point", "champion_games")
-    search_fields = ("summoner__username", "champion__champion_name")
+    list_display = ("summoner", "champion", "point", "games")
+    search_fields = ("summoner__username", "name")
 
 
 @admin.register(models.Rune)
