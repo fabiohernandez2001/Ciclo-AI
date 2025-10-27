@@ -2,8 +2,10 @@ import { use, useEffect, useId, useMemo, useRef, useState } from "react";
 import Select from "./Select";
 import useDebounceValue from "../../hooks/useDebounceValue";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
+import { useQuery } from "@tanstack/react-query";
+import { fetchChampion } from "../../utils/http";
 
-const CHAMPIONS = ["Ahri","Akali","Ashe","Aatrox","Annie","Anivia","Braum","Brand","Caitlyn","Corki"]
+const CHAMPIONS_DUMMY = ["Ahri","Akali","Ashe","Aatrox","Annie","Anivia","Braum","Brand","Caitlyn","Corki"]
 const REGIONS = ["EUW", "NA", "KR", "EUNE", "LAN", "LAS", "OCE", "RU", "TR", "JP"]
 
 export default function Searchbar() {
@@ -21,13 +23,25 @@ export default function Searchbar() {
     const listRef = useRef(null)
     const containerRef = useRef(null)
 
+    const { data: champions, isLoading, error } = useQuery({
+        queryKey: ['champions'],
+        queryFn: ({signal}) => fetchChampion({signal }),
+    })
+
+    let championsList = CHAMPIONS_DUMMY
+
+    if ( champions ) {
+        console.log(champions)
+    }
+
+
     const suggestions = useMemo(() => {
         const plainText = debouncedQuery.trim().toLowerCase()
         if (!plainText) {
             return []
         }
         setOpen(true)
-        return CHAMPIONS.filter((champion) =>
+        return CHAMPIONS_DUMMY.filter((champion) =>
             champion.toLowerCase().startsWith(plainText)
         );
     }, [debouncedQuery]);

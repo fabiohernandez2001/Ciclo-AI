@@ -8,6 +8,7 @@ import Homepage from './pages/home'
 import Champions from './pages/champions'
 import Tierlists from './pages/tierlists'
 import Error from './pages/error'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
   const router = createBrowserRouter([
     {
@@ -32,10 +33,14 @@ import Error from './pages/error'
     },
   ])
 
+const queryClient = new QueryClient()
+
 function App() {
 
   return (
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   )
 }
 

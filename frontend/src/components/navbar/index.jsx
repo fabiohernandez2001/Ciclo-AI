@@ -49,6 +49,7 @@ export default function Navbar() {
     const triggerRef = useRef(null)
     const closeBtnRef = useRef(null)
 
+
     useEffect(() => {
         if (isOpen) {
             document.body.classList.add("overflow-hidden");
