@@ -56,7 +56,7 @@ class Champion(models.Model):
     defense = models.PositiveSmallIntegerField(default=0)
     magic = models.PositiveSmallIntegerField(default=0)
     difficulty = models.PositiveSmallIntegerField(default=0)
-    tags = models.JSONField()
+    tags = models.JSONField(default= {'tags': []})
     partype = models.CharField(default = "")
     hp = models.FloatField(default=0)
     hpperlevel = models.FloatField(default=0)
@@ -78,7 +78,6 @@ class Champion(models.Model):
     attackdamageperlevel = models.FloatField(default=0)
     attackspeedperlevel = models.FloatField(default=0)
     attackspeed = models.FloatField(default=0)
-
     wins = models.FloatField(default=0)
     bans = models.FloatField(default=0)
     picks = models.FloatField(default=0)
@@ -106,11 +105,11 @@ class Rune(models.Model):
 
 class Item(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True, default=0)
-    name = models.CharField(max_length=20)
-    description = models.CharField(max_length=200)
-    plaintext = models.CharField(max_length=255, blank=True)
-    value = models.PositiveSmallIntegerField()
-    description = models.TextField(blank=True)  # HTML de Riot
+    name = models.CharField(max_length=20, default = "")
+    description = models.CharField(max_length=200, default="")
+    plaintext = models.CharField(max_length=255, blank=True, default="")
+    value = models.PositiveSmallIntegerField(default=0)
+    description = models.TextField(blank=True, default="")  # HTML de Riot
     colloq = models.CharField(max_length=255, blank=True)  # términos de búsqueda
     # Propiedades varias del ítem
     stacks = models.PositiveIntegerField(null=True, blank=True)
