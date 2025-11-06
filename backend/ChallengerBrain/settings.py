@@ -58,9 +58,18 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ORIGIN_WHITELIST = [
-    #'direccion del frontend',
+CORS_ORIGIN_ALLOW_ALL = False
+cors_allowed = [#'http://localhost:5173'
+    ]
+def get_cors_permission():
+    if len(cors_allowed) == 0:
+        CORS_ORIGIN_ALLOW_ALL = True
+        return  
+    else:
+        return cors_allowed
     
+CORS_ORIGIN_WHITELIST = [
+    get_cors_permission
 ]
 ROOT_URLCONF = 'ChallengerBrain.urls'
 
