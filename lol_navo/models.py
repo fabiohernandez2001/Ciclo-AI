@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
 
 class Summoner(models.Model):
     puuid = models.CharField(primary_key=True, max_length=72)
@@ -56,7 +55,7 @@ class Champion(models.Model):
     defense = models.PositiveSmallIntegerField(default=0)
     magic = models.PositiveSmallIntegerField(default=0)
     difficulty = models.PositiveSmallIntegerField(default=0)
-    tags = models.JSONField(default= {'tags': []})
+    tags = models.JSONField(default=list, blank=True)
     partype = models.CharField(default = "")
     hp = models.FloatField(default=0)
     hp_per_level = models.FloatField(default=0)
@@ -137,10 +136,10 @@ class Item(models.Model):
     effect = models.JSONField(default=dict, blank=True)
     # Listas y banderas por mapa / tags
     # into / from: listas de IDs de ítems (construcciones)
-    builds_into = ArrayField(models.PositiveIntegerField(), default=list, blank=True)  # "into"
-    builds_from = ArrayField(models.PositiveIntegerField(), default=list, blank=True)  # "from"
+    builds_into = models.JSONField(default=list, blank=True)  # "into"
+    builds_from = models.JSONField(default=list, blank=True)  # "from"
     # tags: lista de etiquetas (Armor, AttackSpeed, Mana, etc.)
-    tags = ArrayField(models.CharField(max_length=32), default=list, blank=True)
+    tags = models.JSONField(default=list, blank=True)
     # maps: {"11": true/false, "12": true/false, ...}
     maps = models.JSONField(default=dict, blank=True)
     # Metadatos opcionales
