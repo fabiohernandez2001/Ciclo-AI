@@ -3,8 +3,7 @@ from lol_navo.models import Champion, Item
 # Create your views here.
 def get_champions(request):
     version_url = "https://ddragon.leagueoflegends.com/api/versions.json"
-    version = requests.get(version_url).json()
-    version = version[0]
+    version = requests.get(version_url).json()[0]
     champion_url = f"https://ddragon.leagueoflegends.com/cdn/{version}/data/es_ES/champion.json"
     champions = requests.get(champion_url).json()
     for champion in champions["data"].values():
