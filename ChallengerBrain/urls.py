@@ -20,5 +20,5 @@ from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('lol_navo/', include(('lol_navo.urls', 'lol_navo'), namespace='lol_navo')),
-    #path('lol_update/', include(('lol_update.urls', 'lol_update'), namespace='lol_update'))
+    path('lol_update/', include(('lol_update.urls', 'lol_update'), namespace='lol_update'))
 ]

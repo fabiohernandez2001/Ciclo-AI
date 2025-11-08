@@ -113,10 +113,10 @@ class Item(models.Model):
     # Propiedades varias del ítem
     stacks = models.PositiveIntegerField(null=True, blank=True)
     depth = models.PositiveIntegerField(null=True, blank=True)
-    consumed = models.BooleanField(default=False)
-    consume_on_full = models.BooleanField(default=False)
-    in_store = models.BooleanField(default=True)
-    hide_from_all = models.BooleanField(default=False)
+    consumed = models.BooleanField(default=False, null=True)
+    consume_on_full = models.BooleanField(default=False, blank=True, null=True)
+    in_store = models.BooleanField(default=True, null=True)
+    hide_from_all = models.BooleanField(default=False, null=True)
     # Requisitos especiales
     required_champion = models.CharField(max_length=32, blank=True)
     required_ally = models.CharField(max_length=32, blank=True)
@@ -133,11 +133,11 @@ class Item(models.Model):
         # stats: diccionario de stats (p.ej. AbilityHaste, MagicResist, etc.)
     stats = models.JSONField(default=dict, blank=True)
     # effect: efectos/variables usadas en la description (p.ej. "Effect1Amount": "15")
-    effect = models.JSONField(default=dict, blank=True)
+    effect = models.JSONField(default=dict, blank=True, null=True)
     # Listas y banderas por mapa / tags
     # into / from: listas de IDs de ítems (construcciones)
-    builds_into = models.JSONField(default=list, blank=True)  # "into"
-    builds_from = models.JSONField(default=list, blank=True)  # "from"
+    builds_into = models.JSONField(default=list, blank=True, null=True)  # "into"
+    builds_from = models.JSONField(default=list, blank=True, null=True)  # "from"
     # tags: lista de etiquetas (Armor, AttackSpeed, Mana, etc.)
     tags = models.JSONField(default=list, blank=True)
     # maps: {"11": true/false, "12": true/false, ...}
